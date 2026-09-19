@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+  <defs>
+    <linearGradient id="slashGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="1.0"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.0"/>
+    </linearGradient>
+  </defs>
+  <!-- Main cutting crescent arc -->
+  <path d="M 15,10 C 65,15 75,55 50,75 C 68,52 55,25 15,10 Z" fill="url(#slashGrad)"/>
+  <!-- Secondary bright inner crescent -->
+  <path d="M 25,18 C 60,22 68,50 48,68 C 62,48 52,28 25,18 Z" fill="#ffffff" opacity="0.9"/>
+  <!-- Sharp energy sparks -->
+  <polygon points="56,22 62,20 60,26" fill="#38bdf8"/>
+  <polygon points="68,40 76,39 72,45" fill="#bae6fd"/>
+  <polygon points="52,65 58,68 53,72" fill="#38bdf8"/>
+</svg>

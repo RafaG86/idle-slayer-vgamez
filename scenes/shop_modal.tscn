@@ -1,0 +1,267 @@
+[gd_scene load_steps=7 format=3 uid="uid://bshopmodal001"]
+
+[ext_resource type="Script" path="res://scripts/shop_modal.gd" id="1_shop"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_window"]
+bg_color = Color(0.08, 0.09, 0.13, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.52, 0.24, 0.95)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_content"]
+bg_color = Color(0.05, 0.06, 0.09, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.22, 0.3, 0.5)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mult_strip"]
+bg_color = Color(0.06, 0.07, 0.1, 0.9)
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.28, 0.38, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab_strip"]
+bg_color = Color(0.04, 0.05, 0.07, 0.95)
+border_width_top = 1
+border_color = Color(0.3, 0.33, 0.45, 0.6)
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab_btn"]
+bg_color = Color(0.12, 0.14, 0.2, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.35, 0.48, 0.7)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="ShopModal" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_shop")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.05, 0.08, 0.75)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PanelWindow" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(840, 560)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_window")
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/PanelWindow"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="CenterContainer/PanelWindow/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="MarginLeft" type="Control" parent="CenterContainer/PanelWindow/VBox/Header"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/PanelWindow/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.98, 0.82, 0.42, 1)
+theme_override_font_sizes/font_size = 20
+text = "🏛️ TIENDA Y MEJORAS DEL REINO"
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="CenterContainer/PanelWindow/VBox/Header"]
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_hover_color = Color(1, 0.4, 0.4, 1)
+theme_override_colors/font_color = Color(0.85, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 18
+text = "✕"
+
+[node name="MarginRight" type="Control" parent="CenterContainer/PanelWindow/VBox/Header"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+
+[node name="ContentArea" type="PanelContainer" parent="CenterContainer/PanelWindow/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_content")
+
+[node name="Margin" type="MarginContainer" parent="CenterContainer/PanelWindow/VBox/ContentArea"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/PanelWindow/VBox/ContentArea/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TabTitleLabel" type="Label" parent="CenterContainer/PanelWindow/VBox/ContentArea/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_font_sizes/font_size = 24
+text = "⚔️ EQUIPO Y ARMAS"
+
+[node name="TabDescLabel" type="Label" parent="CenterContainer/PanelWindow/VBox/ContentArea/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 15
+text = "Desbloquea y forja espadas, dagas y armaduras para potenciar tu daño."
+autowrap_mode = 2
+
+[node name="PlaceholderPanel" type="PanelContainer" parent="CenterContainer/PanelWindow/VBox/ContentArea/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterMsg" type="CenterContainer" parent="CenterContainer/PanelWindow/VBox/ContentArea/Margin/VBox/PlaceholderPanel"]
+layout_mode = 2
+
+[node name="InfoMsg" type="Label" parent="CenterContainer/PanelWindow/VBox/ContentArea/Margin/VBox/PlaceholderPanel/CenterMsg"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.6, 0.7, 0.85)
+theme_override_font_sizes/font_size = 16
+text = "[ Próximamente: Lista interactiva de artículos y mejoras ]"
+horizontal_alignment = 1
+
+[node name="MultiplierStrip" type="PanelContainer" parent="CenterContainer/PanelWindow/VBox"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mult_strip")
+
+[node name="HBox" type="HBoxContainer" parent="CenterContainer/PanelWindow/VBox/MultiplierStrip"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="MultLabel" type="Label" parent="CenterContainer/PanelWindow/VBox/MultiplierStrip/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 14
+text = "⚡ MULTIPLICADOR DE COMPRA:"
+vertical_alignment = 1
+
+[node name="Btn1x" type="Button" parent="CenterContainer/PanelWindow/VBox/MultiplierStrip/HBox"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 14
+text = "1x"
+
+[node name="Btn10x" type="Button" parent="CenterContainer/PanelWindow/VBox/MultiplierStrip/HBox"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 14
+text = "10x"
+
+[node name="Btn50x" type="Button" parent="CenterContainer/PanelWindow/VBox/MultiplierStrip/HBox"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 14
+text = "50x"
+
+[node name="Btn100x" type="Button" parent="CenterContainer/PanelWindow/VBox/MultiplierStrip/HBox"]
+custom_minimum_size = Vector2(54, 30)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 14
+text = "100x"
+
+[node name="BtnMax" type="Button" parent="CenterContainer/PanelWindow/VBox/MultiplierStrip/HBox"]
+custom_minimum_size = Vector2(56, 30)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 14
+text = "MAX"
+
+[node name="TabsStrip" type="PanelContainer" parent="CenterContainer/PanelWindow/VBox"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tab_strip")
+
+[node name="HBox" type="HBoxContainer" parent="CenterContainer/PanelWindow/VBox/TabsStrip"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="TabEquipo" type="Button" parent="CenterContainer/PanelWindow/VBox/TabsStrip/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab_btn")
+theme_override_font_sizes/font_size = 15
+text = "⚔️ EQUIPO"
+
+[node name="TabMejoras" type="Button" parent="CenterContainer/PanelWindow/VBox/TabsStrip/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab_btn")
+theme_override_font_sizes/font_size = 15
+text = "⚡ MEJORAS"
+
+[node name="TabMisiones" type="Button" parent="CenterContainer/PanelWindow/VBox/TabsStrip/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab_btn")
+theme_override_font_sizes/font_size = 15
+text = "📜 MISIONES"
+
+[node name="TabAscension" type="Button" parent="CenterContainer/PanelWindow/VBox/TabsStrip/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab_btn")
+theme_override_font_sizes/font_size = 15
+text = "🔮 ASCENSIÓN"
+
+[node name="TabAjustes" type="Button" parent="CenterContainer/PanelWindow/VBox/TabsStrip/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_tab_btn")
+theme_override_font_sizes/font_size = 15
+text = "⚙️ AJUSTES"

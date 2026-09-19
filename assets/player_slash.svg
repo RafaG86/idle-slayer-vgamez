@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Cape (flowing back violently) -->
+  <polygon points="22,24 2,22 0,38 12,36 22,28" fill="#dc2626"/>
+  <polygon points="22,24 4,20 6,32 16,32 22,26" fill="#ef4444"/>
+  <!-- Back Leg (lunging back) -->
+  <rect x="12" y="38" width="6" height="18" rx="3" fill="#334155" transform="rotate(-35 12 38)"/>
+  <rect x="4" y="52" width="10" height="6" rx="2" fill="#1e293b"/>
+  <!-- Torso & Armor (leaning forward) -->
+  <rect x="22" y="24" width="14" height="18" rx="4" fill="#94a3b8" transform="rotate(15 22 24)"/>
+  <rect x="25" y="26" width="10" height="14" rx="2" fill="#cbd5e1" transform="rotate(15 25 26)"/>
+  <!-- Head & Helmet -->
+  <circle cx="34" cy="15" r="10" fill="#64748b"/>
+  <rect x="27" y="9" width="14" height="14" rx="5" fill="#94a3b8"/>
+  <polygon points="31,5 37,5 35,9 33,9" fill="#fbbf24"/>
+  <rect x="33" y="14" width="9" height="3" rx="1" fill="#38bdf8"/>
+  <!-- Front Leg (deep forward lunge) -->
+  <rect x="28" y="36" width="8" height="18" rx="3" fill="#475569" transform="rotate(30 28 36)"/>
+  <rect x="38" y="52" width="12" height="6" rx="2" fill="#1e293b"/>
+  <!-- Arm & Extended Sword Strike -->
+  <rect x="30" y="24" width="16" height="6" rx="3" fill="#cbd5e1" transform="rotate(10 30 24)"/>
+  <rect x="44" y="25" width="4" height="8" rx="1" fill="#fbbf24"/>
+  <polygon points="48,27 64,24 64,30 48,31" fill="#e2e8f0"/>
+  <polygon points="48,28 64,25 64,28 48,29" fill="#ffffff"/>
+</svg>

@@ -1,0 +1,224 @@
+[gd_scene load_steps=9 format=3 uid="uid://wd0worldscene01"]
+
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_world"]
+[ext_resource type="Texture2D" path="res://assets/bg_sky.svg" id="2_sky"]
+[ext_resource type="Texture2D" path="res://assets/bg_mountains.svg" id="3_mountains"]
+[ext_resource type="Texture2D" path="res://assets/bg_trees.svg" id="4_trees"]
+[ext_resource type="Texture2D" path="res://assets/ground.svg" id="5_ground"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="6_player"]
+[ext_resource type="Texture2D" path="res://assets/coin/coin_0.png" id="7_coin_icon"]
+[ext_resource type="PackedScene" path="res://scenes/coin.tscn" id="8_coin_scene"]
+[ext_resource type="PackedScene" path="res://scenes/shop_modal.tscn" id="9_shop_modal"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(4000, 60)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud"]
+bg_color = Color(0.08, 0.09, 0.14, 0.75)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_coin_badge"]
+bg_color = Color(0.12, 0.08, 0.05, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.48, 0.22, 0.9)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.7, 0.35, 0.1, 0.25)
+shadow_size = 4
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_world")
+
+[node name="Sky" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("2_sky")
+
+[node name="ParallaxLayers" type="Node2D" parent="."]
+
+[node name="Mountains1" type="Sprite2D" parent="ParallaxLayers"]
+position = Vector2(0, 240)
+scale = Vector2(2, 1)
+texture = ExtResource("3_mountains")
+centered = false
+
+[node name="Mountains2" type="Sprite2D" parent="ParallaxLayers"]
+position = Vector2(1280, 240)
+scale = Vector2(2, 1)
+texture = ExtResource("3_mountains")
+centered = false
+
+[node name="Trees1" type="Sprite2D" parent="ParallaxLayers"]
+position = Vector2(0, 260)
+scale = Vector2(2, 1)
+texture = ExtResource("4_trees")
+centered = false
+
+[node name="Trees2" type="Sprite2D" parent="ParallaxLayers"]
+position = Vector2(1280, 260)
+scale = Vector2(2, 1)
+texture = ExtResource("4_trees")
+centered = false
+
+[node name="GroundLayers" type="Node2D" parent="."]
+
+[node name="Ground1" type="Sprite2D" parent="GroundLayers"]
+texture_repeat = 2
+position = Vector2(0, 560)
+texture = ExtResource("5_ground")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1280, 160)
+
+[node name="Ground2" type="Sprite2D" parent="GroundLayers"]
+texture_repeat = 2
+position = Vector2(1280, 560)
+texture = ExtResource("5_ground")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1280, 160)
+
+[node name="GroundCollider" type="StaticBody2D" parent="."]
+position = Vector2(640, 590)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundCollider"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="CoinContainer" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("6_player")]
+position = Vector2(240, 530)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TopBar" type="PanelContainer" parent="HUD"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 16.0
+offset_right = -24.0
+offset_bottom = 76.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="Margin" type="MarginContainer" parent="HUD/TopBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="HBox" type="HBoxContainer" parent="HUD/TopBar/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.85, 0.38, 1)
+theme_override_font_sizes/font_size = 22
+text = "IDLE SLAYER V3"
+vertical_alignment = 1
+
+[node name="CenterCoinContainer" type="CenterContainer" parent="HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CoinBadge" type="PanelContainer" parent="HUD/TopBar/Margin/HBox/CenterCoinContainer"]
+custom_minimum_size = Vector2(110, 36)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_coin_badge")
+
+[node name="Margin" type="MarginContainer" parent="HUD/TopBar/Margin/HBox/CenterCoinContainer/CoinBadge"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 2
+
+[node name="HBox" type="HBoxContainer" parent="HUD/TopBar/Margin/HBox/CenterCoinContainer/CoinBadge/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="CoinIcon" type="TextureRect" parent="HUD/TopBar/Margin/HBox/CenterCoinContainer/CoinBadge/Margin/HBox"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("7_coin_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CoinsLabel" type="Label" parent="HUD/TopBar/Margin/HBox/CenterCoinContainer/CoinBadge/Margin/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.55, 1)
+theme_override_font_sizes/font_size = 20
+text = "0"
+vertical_alignment = 1
+
+[node name="StateBadge" type="PanelContainer" parent="HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+
+[node name="StateLabel" type="Label" parent="HUD/TopBar/Margin/HBox/StateBadge"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "CORRIENDO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShopButton" type="Button" parent="HUD/TopBar/Margin/HBox"]
+custom_minimum_size = Vector2(105, 36)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 0.88, 0.45, 1)
+theme_override_font_sizes/font_size = 15
+text = "🛒 TIENDA"
+
+[node name="Controls" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="JumpButton" type="Button" parent="HUD/Controls"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -110.0
+offset_right = 210.0
+offset_bottom = -34.0
+grow_vertical = 0
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+text = "SALTO
+[ESPACIO / CLICK]"
+
+[node name="AttackButton" type="Button" parent="HUD/Controls"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -210.0
+offset_top = -110.0
+offset_right = -32.0
+offset_bottom = -34.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+text = "ATAQUE
+[Z / X / CLICK DER]"
+
+[node name="ShopModal" parent="HUD" instance=ExtResource("9_shop_modal")]

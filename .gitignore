@@ -1,0 +1,14 @@
+# Godot 4+ cache and imported assets
+.godot/
+
+# Godot-specific ignores
+*.translation
+
+# Mono/C# specific ignores (if ever used)
+.mono/
+data_*/
+mono_crash.*.json
+
+# Export templates / build outputs
+builds/
+bin/

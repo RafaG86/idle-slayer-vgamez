@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://pl1layer0001"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
+[ext_resource type="SpriteFrames" path="res://assets/swordsman/swordsman_frames.tres" id="2_frames"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 16.0
+height = 64.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sword"]
+size = Vector2(80, 70)
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="DustParticles" type="CPUParticles2D" parent="."]
+position = Vector2(-16, 34)
+emitting = false
+amount = 10
+lifetime = 0.35
+explosiveness = 0.1
+randomness = 0.3
+direction = Vector2(-1, -0.3)
+spread = 25.0
+gravity = Vector2(0, 60)
+initial_velocity_min = 40.0
+initial_velocity_max = 80.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+color = Color(0.85, 0.75, 0.65, 0.6)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(25, -10)
+scale = Vector2(0.6, 0.6)
+sprite_frames = ExtResource("2_frames")
+animation = &"run"
+autoplay = "run"
+
+[node name="SwordHitbox" type="Area2D" parent="."]
+position = Vector2(68, -19)
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwordHitbox"]
+shape = SubResource("RectangleShape2D_sword")
+disabled = true

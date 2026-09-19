@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Exportar y Abrir en Chrome",
+            "type": "shell",
+            "command": "powershell -Command \"& 'C:/Users/Flotante/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe' --headless --path . --export-debug 'Web' 'builds/web/index.html'; Start-Process 'C:/Program Files/Google/Chrome/Application/chrome.exe' -ArgumentList 'http://127.0.0.1:8060'\"",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

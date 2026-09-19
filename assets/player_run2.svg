@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Cape (flowing higher) -->
+  <polygon points="26,23 6,30 4,44 16,42 26,28" fill="#dc2626"/>
+  <polygon points="26,23 8,28 10,38 20,36 26,27" fill="#ef4444"/>
+  <!-- Back Arm -->
+  <rect x="18" y="23" width="6" height="12" rx="3" fill="#64748b"/>
+  <!-- Back Leg (stepping forward) -->
+  <rect x="22" y="37" width="6" height="16" rx="3" fill="#334155" transform="rotate(20 22 37)"/>
+  <rect x="28" y="52" width="10" height="6" rx="2" fill="#1e293b"/>
+  <!-- Torso & Armor (slight bob down 1px) -->
+  <rect x="24" y="23" width="14" height="18" rx="4" fill="#94a3b8"/>
+  <rect x="26" y="25" width="10" height="14" rx="2" fill="#cbd5e1"/>
+  <!-- Belt & Scabbard -->
+  <rect x="23" y="37" width="16" height="4" rx="1" fill="#78350f"/>
+  <rect x="28" y="38" width="5" height="4" rx="1" fill="#fbbf24"/>
+  <!-- Head & Helmet -->
+  <circle cx="31" cy="15" r="10" fill="#64748b"/>
+  <rect x="24" y="9" width="14" height="14" rx="5" fill="#94a3b8"/>
+  <!-- Helmet Crest -->
+  <polygon points="28,5 34,5 32,9 30,9" fill="#fbbf24"/>
+  <!-- Visor Slit -->
+  <rect x="30" y="14" width="9" height="3" rx="1" fill="#38bdf8"/>
+  <!-- Front Leg (pushing back) -->
+  <rect x="24" y="37" width="7" height="16" rx="3" fill="#475569" transform="rotate(-25 24 37)"/>
+  <rect x="14" y="52" width="10" height="6" rx="2" fill="#1e293b"/>
+  <!-- Front Arm & Hand holding Sword -->
+  <rect x="31" y="25" width="6" height="10" rx="3" fill="#cbd5e1"/>
+  <!-- Sword -->
+  <rect x="35" y="29" width="4" height="4" rx="1" fill="#fbbf24"/>
+  <rect x="33" y="32" width="8" height="2" fill="#78350f"/>
+  <polygon points="37,29 57,15 59,17 39,31" fill="#e2e8f0"/>
+  <polygon points="38,28 58,14 59,15 39,29" fill="#ffffff"/>
+</svg>

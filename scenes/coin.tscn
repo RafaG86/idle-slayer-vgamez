@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcoinscene001"]
+
+[ext_resource type="Script" path="res://scripts/coin.gd" id="1_coin"]
+[ext_resource type="SpriteFrames" path="res://assets/coin/coin_frames.tres" id="2_frames"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_coin"]
+radius = 15.0
+
+[node name="Coin" type="Area2D" groups=["coins"]]
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_coin")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_frames")
+animation = &"spin"
+autoplay = "spin"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_coin")
+
+[node name="Sparkles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 12
+lifetime = 0.35
+one_shot = true
+explosiveness = 0.85
+randomness = 0.4
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 60)
+initial_velocity_min = 40.0
+initial_velocity_max = 90.0
+scale_amount_min = 2.0
+scale_amount_max = 3.5
+color = Color(1, 0.85, 0.45, 0.95)

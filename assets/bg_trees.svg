@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <!-- Mid-ground forest silhouette, repeating seamlessly -->
+  <path d="
+    M 0,280
+    L 20,240 L 30,255 L 45,220 L 60,250 L 80,210 L 95,245 L 120,200 L 140,250
+    L 170,225 L 190,260 L 220,195 L 240,240 L 270,215 L 290,255 L 320,190
+    L 340,235 L 370,210 L 390,250 L 420,205 L 450,245 L 480,195 L 510,240
+    L 540,210 L 560,250 L 590,200 L 615,245 L 640,280
+    L 640,360 L 0,360 Z" 
+    fill="#151b29" opacity="0.95"/>
+</svg>
