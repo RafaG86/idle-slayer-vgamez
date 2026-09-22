@@ -69,5 +69,5 @@ animations = [{
 }],
 "loop": false,
 "name": &"slash",
-"speed": 14.0
+"speed": 16.0
 }]
