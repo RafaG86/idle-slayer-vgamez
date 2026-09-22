@@ -5,14 +5,18 @@ extends Node2D
 const GAME_SPEED: float = 260.0
 
 @onready var player: Player = $Player
+@onready var sky: Sprite2D = $Sky
 @onready var ground1: Sprite2D = $GroundLayers/Ground1
 @onready var ground2: Sprite2D = $GroundLayers/Ground2
+@onready var ground3: Sprite2D = $GroundLayers/Ground3
 
 @onready var bg_mountains1: Sprite2D = $ParallaxLayers/Mountains1
 @onready var bg_mountains2: Sprite2D = $ParallaxLayers/Mountains2
+@onready var bg_mountains3: Sprite2D = $ParallaxLayers/Mountains3
 
 @onready var bg_trees1: Sprite2D = $ParallaxLayers/Trees1
 @onready var bg_trees2: Sprite2D = $ParallaxLayers/Trees2
+@onready var bg_trees3: Sprite2D = $ParallaxLayers/Trees3
 
 # Referencias de HUD
 @onready var label_state: Label = $HUD/TopBar/Margin/HBox/StateBadge/StateLabel
@@ -23,6 +27,11 @@ const GAME_SPEED: float = 260.0
 @onready var btn_attack: Button = $HUD/Controls/AttackButton
 @onready var btn_shop: Button = $HUD/TopBar/Margin/HBox/ShopButton
 @onready var shop_modal: ShopModal = $HUD/ShopModal
+
+# Listas de sprites para desplazamiento infinito ultra-ancho
+var _ground_sprites: Array[Sprite2D] = []
+var _tree_sprites: Array[Sprite2D] = []
+var _mountain_sprites: Array[Sprite2D] = []
 
 # Sistema de Monedas (Object Pooling - Zero GC)
 const COIN_SCENE: PackedScene = preload("res://scenes/coin.tscn")
@@ -56,9 +65,26 @@ func _ready() -> void:
 	btn_shop.focus_mode = Control.FOCUS_NONE
 	btn_shop.pressed.connect(_on_shop_pressed)
 	
+	_ground_sprites = [ground1, ground2, ground3]
+	_tree_sprites = [bg_trees1, bg_trees2, bg_trees3]
+	_mountain_sprites = [bg_mountains1, bg_mountains2, bg_mountains3]
+	
+	# Adaptación responsive a cambios de tamaño de ventana/pantalla
+	get_viewport().size_changed.connect(_update_viewport_layout)
+	_update_viewport_layout()
+	
 	_update_state_label("CORRIENDO", Color(0.3, 0.9, 0.4))
 	_init_coin_pool()
 	_update_coin_display()
+
+func _update_viewport_layout() -> void:
+	var vp_size: Vector2 = get_viewport_rect().size
+	if is_instance_valid(sky):
+		sky.position = Vector2(vp_size.x * 0.5, vp_size.y * 0.5)
+		var scale_x: float = max(1.0, vp_size.x / 1280.0)
+		var scale_y: float = max(1.0, vp_size.y / 720.0)
+		var s: float = max(scale_x, scale_y)
+		sky.scale = Vector2(s, s)
 
 func _init_coin_pool() -> void:
 	for i in range(COIN_POOL_SIZE):
@@ -68,12 +94,12 @@ func _init_coin_pool() -> void:
 		coin_pool.append(coin)
 
 func _process(delta: float) -> void:
-	# 1. Desplazamiento del Suelo Continuo
-	_scroll_layer(ground1, ground2, 1280.0, GAME_SPEED * delta)
+	# 1. Desplazamiento del Suelo Continuo (3 sprites en bucle infinito)
+	_scroll_sprites(_ground_sprites, 1280.0, GAME_SPEED * delta)
 	
 	# 2. Desplazamiento Parallax de Capas
-	_scroll_layer(bg_trees1, bg_trees2, 1280.0, GAME_SPEED * 0.4 * delta)
-	_scroll_layer(bg_mountains1, bg_mountains2, 1280.0, GAME_SPEED * 0.15 * delta)
+	_scroll_sprites(_tree_sprites, 1280.0, GAME_SPEED * 0.4 * delta)
+	_scroll_sprites(_mountain_sprites, 1280.0, GAME_SPEED * 0.15 * delta)
 	
 	# 3. Métricas de distancia
 	distance_run += (GAME_SPEED * delta) / 100.0
@@ -86,7 +112,8 @@ func _process(delta: float) -> void:
 
 func _spawn_coin_pattern() -> void:
 	var count: int = randi_range(1, 3)
-	var spawn_x: float = 1330.0
+	var vp_width: float = get_viewport_rect().size.x
+	var spawn_x: float = max(1330.0, vp_width + 80.0)
 	var pattern_type: int = randi() % 3
 	
 	match pattern_type:
@@ -135,14 +162,16 @@ func _update_coin_display() -> void:
 		var tween: Tween = create_tween()
 		tween.tween_property(label_coins, "modulate", Color(1.0, 0.9, 0.55), 0.18)
 
-func _scroll_layer(s1: Sprite2D, s2: Sprite2D, width: float, move_amount: float) -> void:
-	s1.position.x -= move_amount
-	s2.position.x -= move_amount
-	
-	if s1.position.x <= -width:
-		s1.position.x = s2.position.x + width
-	if s2.position.x <= -width:
-		s2.position.x = s1.position.x + width
+func _scroll_sprites(sprites: Array[Sprite2D], width: float, move_amount: float) -> void:
+	for s in sprites:
+		s.position.x -= move_amount
+	for s in sprites:
+		if s.position.x <= -width:
+			var max_x: float = s.position.x
+			for other in sprites:
+				if other != s and other.position.x > max_x:
+					max_x = other.position.x
+			s.position.x = max_x + width
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Atajo de teclado para abrir/cerrar tienda: B o E
