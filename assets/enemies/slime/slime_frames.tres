@@ -1,0 +1,43 @@
+[gd_resource type="SpriteFrames" load_steps=9 format=3 uid="uid://bslimeframe001"]
+
+[ext_resource type="Texture2D" path="res://assets/enemies/slime/walk_0.png" id="1_w0"]
+[ext_resource type="Texture2D" path="res://assets/enemies/slime/walk_1.png" id="2_w1"]
+[ext_resource type="Texture2D" path="res://assets/enemies/slime/walk_2.png" id="3_w2"]
+[ext_resource type="Texture2D" path="res://assets/enemies/slime/walk_3.png" id="4_w3"]
+[ext_resource type="Texture2D" path="res://assets/enemies/slime/death_0.png" id="5_d0"]
+[ext_resource type="Texture2D" path="res://assets/enemies/slime/death_1.png" id="6_d1"]
+[ext_resource type="Texture2D" path="res://assets/enemies/slime/death_2.png" id="7_d2"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_w0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_w1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_w2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_w3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_d0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_d1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_d2")
+}],
+"loop": false,
+"name": &"death",
+"speed": 10.0
+}]

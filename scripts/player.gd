@@ -137,20 +137,20 @@ vec3 rgb2hsv(vec3 c) {
 
 void fragment() {
     vec4 col = texture(TEXTURE, UV);
-    if (!mask_active || col.a < 0.05) {
-        COLOR = col;
-        return;
-    }
-    vec3 hsv = rgb2hsv(col.rgb);
-    bool in_hue = (hsv.x >= hue_min && hsv.x <= hue_max);
-    bool in_sat = (hsv.y >= sat_min);
-    bool in_val = (hsv.z >= val_min);
-    if (in_hue && in_sat && in_val) {
-        float hue_mid = (hue_min + hue_max) * 0.5;
-        float hue_half = (hue_max - hue_min) * 0.5;
-        float edge = abs(hsv.x - hue_mid) / hue_half;
-        float alpha_factor = smoothstep(0.55, 1.0, edge);
-        COLOR = vec4(col.rgb, col.a * alpha_factor);
+    if (mask_active && col.a >= 0.05) {
+        vec3 hsv = rgb2hsv(col.rgb);
+        bool in_hue = (hsv.x >= hue_min && hsv.x <= hue_max);
+        bool in_sat = (hsv.y >= sat_min);
+        bool in_val = (hsv.z >= val_min);
+        if (in_hue && in_sat && in_val) {
+            float hue_mid = (hue_min + hue_max) * 0.5;
+            float hue_half = (hue_max - hue_min) * 0.5;
+            float edge = abs(hsv.x - hue_mid) / hue_half;
+            float alpha_factor = smoothstep(0.55, 1.0, edge);
+            COLOR = vec4(col.rgb, col.a * alpha_factor);
+        } else {
+            COLOR = col;
+        }
     } else {
         COLOR = col;
     }

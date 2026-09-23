@@ -23,6 +23,7 @@ const GAME_SPEED: float = 260.0
 @onready var label_coins: Label = $HUD/TopBar/Margin/HBox/CenterCoinContainer/CoinBadge/Margin/HBox/CoinsLabel
 @onready var coin_badge: PanelContainer = $HUD/TopBar/Margin/HBox/CenterCoinContainer/CoinBadge
 @onready var coin_container: Node2D = $CoinContainer
+@onready var enemy_container: Node2D = $EnemyContainer
 @onready var btn_jump: Button = $HUD/Controls/JumpButton
 @onready var btn_attack: Button = $HUD/Controls/AttackButton
 @onready var btn_shop: Button = $HUD/TopBar/Margin/HBox/ShopButton
@@ -42,6 +43,16 @@ var coin_pool: Array[Coin] = []
 var coin_spawn_timer: float = 2.0   # Aparece el primer patrón a los 3s de inicio
 var coins_collected: int = 0
 var distance_run: float = 0.0
+
+# Sistema de Slimes de Tierra (Object Pooling - Zero GC)
+const SLIME_SCENE: PackedScene = preload("res://scenes/slime.tscn")
+const SLIME_POOL_SIZE: int = 6
+const SLIME_SPAWN_INTERVAL_MIN: float = 4.0
+const SLIME_SPAWN_INTERVAL_MAX: float = 7.0
+
+var slime_pool: Array[Slime] = []
+var slime_spawn_timer: float = 0.0
+var slime_next_spawn_time: float = 2.5
 
 func _ready() -> void:
 	# Asegurar que ningún botón tome el foco del teclado
@@ -75,6 +86,7 @@ func _ready() -> void:
 	
 	_update_state_label("CORRIENDO", Color(0.3, 0.9, 0.4))
 	_init_coin_pool()
+	_init_slime_pool()
 	_update_coin_display()
 
 func _update_viewport_layout() -> void:
@@ -93,6 +105,13 @@ func _init_coin_pool() -> void:
 		coin.collected.connect(_on_coin_collected)
 		coin_pool.append(coin)
 
+func _init_slime_pool() -> void:
+	for i in range(SLIME_POOL_SIZE):
+		var slime: Slime = SLIME_SCENE.instantiate() as Slime
+		enemy_container.add_child(slime)
+		slime.killed.connect(_on_slime_killed)
+		slime_pool.append(slime)
+
 func _process(delta: float) -> void:
 	# 1. Desplazamiento del Suelo Continuo (3 sprites en bucle infinito)
 	_scroll_sprites(_ground_sprites, 1280.0, GAME_SPEED * delta)
@@ -109,6 +128,13 @@ func _process(delta: float) -> void:
 	if coin_spawn_timer >= COIN_SPAWN_INTERVAL:
 		coin_spawn_timer = 0.0
 		_spawn_coin_pattern()
+
+	# 5. Spawner de Slimes de Tierra
+	slime_spawn_timer += delta
+	if slime_spawn_timer >= slime_next_spawn_time:
+		slime_spawn_timer = 0.0
+		slime_next_spawn_time = randf_range(SLIME_SPAWN_INTERVAL_MIN, SLIME_SPAWN_INTERVAL_MAX)
+		_spawn_slime()
 
 func _spawn_coin_pattern() -> void:
 	var count: int = randi_range(1, 3)
@@ -150,9 +176,23 @@ func _spawn_single_coin(pos: Vector2) -> void:
 			coin.activate(pos, GAME_SPEED, 1)
 			return
 
+func _spawn_slime() -> void:
+	var vp_width: float = get_viewport_rect().size.x
+	var spawn_x: float = max(1360.0, vp_width + 120.0)
+	var spawn_y: float = 540.0
+	for slime in slime_pool:
+		if slime.current_state == Slime.State.INACTIVE:
+			slime.activate(Vector2(spawn_x, spawn_y), GAME_SPEED, randi_range(1, 2))
+			return
+
 func _on_coin_collected(_coin: Coin, val: int) -> void:
 	coins_collected += val
 	_update_coin_display()
+
+func _on_slime_killed(reward: int, _pos: Vector2) -> void:
+	coins_collected += reward
+	_update_coin_display()
+	_update_state_label("¡SLIME DERROTADO! +" + str(reward), Color(0.4, 1.0, 0.5))
 
 func _update_coin_display() -> void:
 	label_coins.text = str(coins_collected)

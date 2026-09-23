@@ -115,6 +115,8 @@ shape = SubResource("RectangleShape2D_ground")
 
 [node name="CoinContainer" type="Node2D" parent="."]
 
+[node name="EnemyContainer" type="Node2D" parent="."]
+
 [node name="Player" parent="." instance=ExtResource("6_player")]
 position = Vector2(240, 530)
 
